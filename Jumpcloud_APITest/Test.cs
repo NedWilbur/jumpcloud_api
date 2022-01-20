@@ -30,9 +30,14 @@ namespace Jumpcloud_APITest
 
         [Test]
         [Description("Application opens with configured PORT")]
+        [Ignore("TODO...")]
         public void TC_OpenWithPort()
         {
-            // TODO
+            /*
+            Set port
+            Start app
+            Assert app opened
+            */
         }
 
         [Test]
