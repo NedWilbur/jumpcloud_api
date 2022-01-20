@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jumpcloud_APITest", "Jumpcloud_APITest\Jumpcloud_APITest.csproj", "{B1F0785F-EB5C-4FE2-9181-FE199A6BF3BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1F0785F-EB5C-4FE2-9181-FE199A6BF3BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F0785F-EB5C-4FE2-9181-FE199A6BF3BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F0785F-EB5C-4FE2-9181-FE199A6BF3BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F0785F-EB5C-4FE2-9181-FE199A6BF3BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6916ED1B-6153-4F4D-9AE1-23D779A231A7}
+	EndGlobalSection
+EndGlobal
