@@ -1,6 +1,9 @@
 using NUnit.Framework;
 using System.Net;
 
+[assembly: Parallelizable(ParallelScope.All)]
+[assembly: LevelOfParallelism(10)]
+
 namespace Jumpcloud_APITest
 {
     public class Tests
