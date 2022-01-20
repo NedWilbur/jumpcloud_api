@@ -32,24 +32,13 @@ namespace Jumpcloud_APITest
         }
 
         [Test]
-        [Description("Application opens with configured PORT")]
-        [Ignore("TODO...")]
-        public void TC_OpenWithPort()
-        {
-            /*
-            Set port
-            Start app
-            Assert app opened
-            */
-        }
-
-        [Test]
         [Description("Application hashes provided password and returns job id greater than 0")]
         public void TC_HashPassword()
         {
             int jobId = int.Parse(Actions.GenerateHash().Content);
             Assert.Greater(jobId, 0);
         }
+        
 
         [Test]
         [Description("Application returns error when provided empty password")]
@@ -127,11 +116,20 @@ namespace Jumpcloud_APITest
         {
             for (int i = 0; i < 10; i++)
                 Actions.GenerateHashAsync();
+            Utils.Sleep(6000);
 
             var stats = Actions.GetStats();
             Assert.IsNotNull(stats);
             Assert.AreEqual(10, stats?.TotalRequests); // BUG?: TotalRequest not calculated until after task completed (expected?)
             Assert.Greater(0, stats?.AverageTime); // BUG: AverageTime = 0
+        }
+
+        [Test]
+        [Description("JobId increments for each requested hash")]
+        public void TC_RequestHashPasswordIncrementsJobId()
+        {
+            for (int i = 1; i <= 5; i++)
+                Assert.AreEqual(i, int.Parse(Actions.GenerateHash().Content));
         }
     }
 }
