@@ -57,6 +57,13 @@ namespace Jumpcloud_APITest
             return JsonConvert.DeserializeObject<Stats>(response.Content);
         }
 
+        // Utils (TODO: Move to Util class?)
         internal static void Sleep(int ms) => Task.Delay(ms);
+
+        public static bool IsBase64String(string base64)
+        {
+            Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
+            return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
+        }
     }
 }
