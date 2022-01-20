@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Net;
 
@@ -118,7 +119,7 @@ namespace Jumpcloud_APITest
                 Actions.GenerateHashAsync();
             Utils.Sleep(6000);
 
-            var stats = Actions.GetStats();
+            var stats = JsonConvert.DeserializeObject<Stats>(Actions.GetStats().Content);
             Assert.IsNotNull(stats);
             Assert.AreEqual(10, stats?.TotalRequests); // BUG?: TotalRequest not calculated until after task completed (expected?)
             Assert.Greater(0, stats?.AverageTime); // BUG: AverageTime = 0
@@ -130,6 +131,14 @@ namespace Jumpcloud_APITest
         {
             for (int i = 1; i <= 5; i++)
                 Assert.AreEqual(i, int.Parse(Actions.GenerateHash().Content));
+        }
+
+        [Test]
+        [Description("/stats does not accept data")]
+        public void TC_StatsDoesNotAcceptData()
+        {
+            var response = Actions.GetStats("Hello World");
+            Assert.AreEqual(0, (int)response.StatusCode);
         }
     }
 }

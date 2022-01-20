@@ -91,12 +91,11 @@ namespace Jumpcloud_APITest
         /// <summary>
         /// Request stats
         /// </summary>
-        /// <returns>Stats object containing TotalRequest and AverageTime </returns>
-        internal static Stats? GetStats()
+        /// <param name="body">Include a body to validate a error is returned</param>
+        internal static IRestResponse GetStats(string body = null)
         {
             Log.Info("Getting stats");
-            IRestResponse response = Api.Get($"{Config.BaseUrl}/stats", headers, null);
-            return JsonConvert.DeserializeObject<Stats>(response.Content);
+            return Api.Get($"{Config.BaseUrl}/stats", headers, body);
         }
     }
 }
