@@ -41,12 +41,13 @@ namespace Jumpcloud_APITest
 
         internal static IRestResponse GetHash(int id)
         {
-            return Api.Post($"{Config.BaseUrl}/hash/{id}", headers, null);
+            return Api.Get($"{Config.BaseUrl}/hash/{id}", headers, null);
         }
 
-        internal static IRestResponse GetStats()
+        internal static Stats GetStats()
         {
-            throw new NotImplementedException();
+            IRestResponse response = Api.Get($"{Config.BaseUrl}/stats", headers, null);
+            return JsonConvert.DeserializeObject<Stats>(response.Content);
         }
 
         internal static void Sleep(int ms) => Task.Delay(ms);
