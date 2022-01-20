@@ -74,7 +74,14 @@ namespace Jumpcloud_APITest
         [Description("Application can hash multiple passwords simultaniously")]
         public void TC_HashMultiplePasswordsAsync()
         {
-            
+            int numberOfPasswords = 10;
+
+            for (int i = 0; i < numberOfPasswords; i++)
+                Actions.GenerateHashAsync();
+
+            Actions.Sleep(6000); // TODO: Dev better way to detect when async task are completed
+            int jobId = int.Parse(Actions.GenerateHash().Content);
+            Assert.AreEqual(numberOfPasswords, jobId);
         }
 
         [Test]

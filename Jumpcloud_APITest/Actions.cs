@@ -44,6 +44,16 @@ namespace Jumpcloud_APITest
             return Api.Post($"{Config.BaseUrl}/hash", headers, body);
         }
 
+        // TODO: Investigate way to reduce redundancy of below method (similar to above method)
+        internal static async void GenerateHashAsync(string password = null)
+        {
+            if (password == null) password = Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
+            Log.Info($"Generating hash for {password} (ASYNC)");
+
+            string body = JsonConvert.SerializeObject(new { password = password });
+            Api.PostAsync($"{Config.BaseUrl}/hash", headers, body);
+        }
+
         internal static IRestResponse GetHash(int jobId)
         {
             Log.Info($"Getting hash for job id {jobId}");
