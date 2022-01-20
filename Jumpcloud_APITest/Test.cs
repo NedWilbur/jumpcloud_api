@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.Net;
 
 [assembly: Parallelizable(ParallelScope.All)]
-[assembly: LevelOfParallelism(10)]
+[assembly: LevelOfParallelism(1)]
 
 namespace Jumpcloud_APITest
 {
@@ -76,7 +76,7 @@ namespace Jumpcloud_APITest
 
             for (int i = 0; i < numberOfPasswords; i++)
                 Actions.GenerateHashAsync();
-            Utils.Sleep(6000); // TODO: Actually detect when async task are completed
+            Utils.Sleep(10000); // TODO: Actually detect when async task are completed
 
             int jobId = int.Parse(Actions.GenerateHash().Content);
             Assert.AreEqual(numberOfPasswords, jobId);
@@ -117,7 +117,7 @@ namespace Jumpcloud_APITest
         {
             for (int i = 0; i < 10; i++)
                 Actions.GenerateHashAsync();
-            Utils.Sleep(6000);
+            Utils.Sleep(10000);
 
             var stats = JsonConvert.DeserializeObject<Stats>(Actions.GetStats().Content);
             Assert.IsNotNull(stats);
