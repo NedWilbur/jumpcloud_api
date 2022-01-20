@@ -78,31 +78,51 @@ namespace Jumpcloud_APITest
 
             for (int i = 0; i < numberOfPasswords; i++)
                 Actions.GenerateHashAsync();
+            Actions.Sleep(6000); // TODO: Actually detect when async task are completed
 
-            Actions.Sleep(6000); // TODO: Dev better way to detect when async task are completed
             int jobId = int.Parse(Actions.GenerateHash().Content);
             Assert.AreEqual(numberOfPasswords, jobId);
         }
 
         [Test]
         [Description("Application hashes passwords during shutdown grace period")]
-        public void Test5()
+        [Ignore("In progress...")]
+        public void TC_HashPasswordsDuringGracePeriod()
         {
+            for (int i = 0; i < 10; i++)
+                Actions.GenerateHashAsync();
 
+            int jobId = int.Parse(Actions.GenerateHash().Content);
+            var response = Actions.GetHash(jobId);
+            Actions.Shutdown();
+
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.IsTrue(Actions.IsBase64String(response.Content));
         }
 
         [Test]
         [Description("Application denies password hash request during pending shutdown")]
-        public void Test6()
+        [Ignore("In progress...")]
+        public void TC_HashRequestDuringShutdownReturnsError()
         {
+            Actions.Shutdown();
+            int jobId = int.Parse(Actions.GenerateHash().Content);
+            var response = Actions.GetHash(jobId);
 
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.IsTrue(Actions.IsBase64String(response.Content));
         }
 
         [Test]
         [Description("Application provides accurate stats")]
-        public void Test7()
+        public void TC_GetStats()
         {
+            for (int i = 0; i < 10; i++)
+                Actions.GenerateHashAsync();
 
+            Stats stats = Actions.GetStats();
+            Assert.AreEqual(10, stats.TotalRequests); // BUG?: TotalRequest not calculated until after task completed (expected?)
+            Assert.Greater(0, stats.AverageTime); // BUG: AverageTime = 0
         }
     }
 }

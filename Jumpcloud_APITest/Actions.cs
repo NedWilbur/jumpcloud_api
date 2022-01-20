@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,10 +23,13 @@ namespace Jumpcloud_APITest
             appProcess = Process.Start(Config.AppPath);
         }
 
-        internal static void StopService()
+        internal static void Shutdown()
         {
+            throw new NotImplementedException("Shutdown not currently working");
+
             Log.Info("Stopping service");
-            Api.Post(Config.BaseUrl, headers, "shutdown");
+            IRestResponse response = Api.Post(Config.BaseUrl, headers, "shutdown", false);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         internal static void KillService()
