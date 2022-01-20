@@ -7,12 +7,19 @@ namespace Jumpcloud_APITest
         [SetUp]
         public void Setup()
         {
+            Utils.StartService();
+        }
+
+        [TearDown]
+        public void Teardown()
+        {
+            Utils.KillService();
         }
 
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            Utils.Sleep(1000);
         }
     }
 }

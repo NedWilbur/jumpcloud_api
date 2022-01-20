@@ -8,6 +8,7 @@ namespace Jumpcloud_APITest
 {
     internal static class Config
     {
-        static string BaseUrl { get; set; } = "localhost:8088";
+        internal const string AppPath = "app.exe";
+        internal const string BaseUrl = "localhost:8088";
     }
 }
