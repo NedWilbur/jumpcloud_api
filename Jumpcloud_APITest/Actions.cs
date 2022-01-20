@@ -44,10 +44,10 @@ namespace Jumpcloud_APITest
             return Api.Post($"{Config.BaseUrl}/hash", headers, body);
         }
 
-        internal static IRestResponse GetHash(int id)
+        internal static IRestResponse GetHash(int jobId)
         {
-            Log.Info($"Getting hash for id {id}");
-            return Api.Get($"{Config.BaseUrl}/hash/{id}", headers, null);
+            Log.Info($"Getting hash for job id {jobId}");
+            return Api.Get($"{Config.BaseUrl}/hash/{jobId}", headers, null);
         }
 
         internal static Stats GetStats()
