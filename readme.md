@@ -8,13 +8,11 @@ At this stage, I simply play with the AUT. I try all the documented features and
 
 Once I have a better understanding of the AUT, I do a risk assessment of the features, asking, “how big of a risk to the company if feature X fails”. Those with the highest risk are the first to be tested (typically categorized as a “Smoke” type test). I go through each feature assessing the risk to determine test case priority.
 
-When considering what test cases are good automation candidates, you also consider the risk, but also the return on investment. If a test case is low risk but requires heavy dev work, it is dropped in priority due to a longer return on investment.
+When considering what test cases are good automation candidates, you consider the risk, but also the return on investment. If a test case is low risk but requires heavy dev work, it is dropped in priority due to a longer return on investment.
 
 For this particular project, given that I had no-predefined test cases and I was the sole QA engineer, I decided to use an “automation-first” method. I started building the base foundation for testing the AUT while also defining test cases within the code. Once I felt comfortable with the defined test cases, I developed the code required to automate them. 
 
 This approach allowed me to develop the test cases and automation with the most efficient use of time. However, if I were on a team, I would first define the test cases in a more traditional manner ideally within a test case management tool, and then follow with developing the automation.
-
-I did find a few potential bugs (possible expected behavior) which I have defined below.
 
 ## Next steps: Continued automation dev & CI
 
