@@ -24,5 +24,10 @@ namespace Jumpcloud_APITest
             Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
             return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
         }
+
+        /// <summary>
+        /// Create environment variable PORT equal to provided port
+        /// </summary>
+        public static void SetPort(int port) => Environment.SetEnvironmentVariable("PORT", port.ToString());
     }
 }

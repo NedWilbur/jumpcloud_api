@@ -12,7 +12,7 @@ namespace Jumpcloud_APITest
         public void Setup()
         {
             Log.Info($"Starting test '{TestContext.CurrentContext.Test.FullName}'");
-            //Actions.StartService(); // TODO: Not working. investigate.
+            Actions.StartService();
         }
 
         [TearDown]
@@ -26,9 +26,9 @@ namespace Jumpcloud_APITest
         [Description("Used to test actions")]
         public void Sandbox()
         {
-            var pass = Actions.GenerateHash();
-            var hash = Actions.GetHash(1);
-            var stats = Actions.GetStats();
+            //var pass = Actions.GenerateHash();
+            //var hash = Actions.GetHash(1);
+            //var stats = Actions.GetStats();
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Jumpcloud_APITest
 
             int jobId = int.Parse(Actions.GenerateHash().Content);
             var response = Actions.GetHash(jobId);
-            Actions.Shutdown();
+            Actions.ShutdownService();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
             Assert.IsTrue(Utils.IsBase64String(response.Content));
@@ -113,7 +113,7 @@ namespace Jumpcloud_APITest
         [Ignore("In progress...")]
         public void TC_HashRequestDuringShutdownReturnsError()
         {
-            Actions.Shutdown();
+            Actions.ShutdownService();
             int jobId = int.Parse(Actions.GenerateHash().Content);
             var response = Actions.GetHash(jobId);
 
@@ -128,9 +128,10 @@ namespace Jumpcloud_APITest
             for (int i = 0; i < 10; i++)
                 Actions.GenerateHashAsync();
 
-            Stats stats = Actions.GetStats();
-            Assert.AreEqual(10, stats.TotalRequests); // BUG?: TotalRequest not calculated until after task completed (expected?)
-            Assert.Greater(0, stats.AverageTime); // BUG: AverageTime = 0
+            var stats = Actions.GetStats();
+            Assert.IsNotNull(stats);
+            Assert.AreEqual(10, stats?.TotalRequests); // BUG?: TotalRequest not calculated until after task completed (expected?)
+            Assert.Greater(0, stats?.AverageTime); // BUG: AverageTime = 0
         }
     }
 }

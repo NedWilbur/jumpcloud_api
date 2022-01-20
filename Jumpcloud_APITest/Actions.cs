@@ -13,29 +13,30 @@ namespace Jumpcloud_APITest
 {
     internal static class Actions
     {
-        private static Process appProcess;
+        private static Process? appProcess;
         private static Dictionary<string, string> headers = new Dictionary<string, string>() { { "Content-Type", "application/json" } };
 
 
         /// <summary>
         /// Starts service located at {Config.AppPath}
         /// </summary>
-        internal static void StartService()
+        internal static void StartService(int port = 8088)
         {
-            Log.Info("Starting service");
+            Log.Info($"Starting service on port {port}");
+            Utils.SetPort(port);
             appProcess = Process.Start(Config.AppPath);
+            // TODO: Assert proper startup by capturing redirected app output
         }
 
         /// <summary>
         /// Request service shutdown
         /// </summary>
-        internal static void Shutdown()
+        internal static void ShutdownService()
         {
-            throw new NotImplementedException("Shutdown not currently working");
-
             Log.Info("Stopping service");
             IRestResponse response = Api.Post(Config.BaseUrl, headers, "shutdown", false);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            appProcess?.WaitForExit();
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Jumpcloud_APITest
         /// </summary>
         /// <param name="password">Password to hash. If not provided, a random password will be used.</param>
         /// <returns></returns>
-        internal static IRestResponse GenerateHash(string password = null)
+        internal static IRestResponse GenerateHash(string? password = null)
         {
             if (password == null) password = Utils.Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
             Log.Info($"Generating hash for {password}");
@@ -67,7 +68,7 @@ namespace Jumpcloud_APITest
         /// </summary>
         /// <param name="password">Password to hash. If not provided, a random password will be used.</param>
         // TODO: Investigate way to reduce redundancy of below method (similar to above method)
-        internal static async void GenerateHashAsync(string password = null)
+        internal static void GenerateHashAsync(string? password = null)
         {
             if (password == null) password = Utils.Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
             Log.Info($"Generating hash for {password} (ASYNC)");
@@ -91,7 +92,7 @@ namespace Jumpcloud_APITest
         /// Request stats
         /// </summary>
         /// <returns>Stats object containing TotalRequest and AverageTime </returns>
-        internal static Stats GetStats()
+        internal static Stats? GetStats()
         {
             Log.Info("Getting stats");
             IRestResponse response = Api.Get($"{Config.BaseUrl}/stats", headers, null);
