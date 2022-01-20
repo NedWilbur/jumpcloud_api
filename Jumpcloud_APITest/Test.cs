@@ -64,7 +64,7 @@ namespace Jumpcloud_APITest
             int jobId = int.Parse(Actions.GenerateHash().Content);
             var response = Actions.GetHash(jobId);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(Actions.IsBase64String(response.Content));
+            Assert.IsTrue(Utils.IsBase64String(response.Content));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Jumpcloud_APITest
 
             for (int i = 0; i < numberOfPasswords; i++)
                 Actions.GenerateHashAsync();
-            Actions.Sleep(6000); // TODO: Actually detect when async task are completed
+            Utils.Sleep(6000); // TODO: Actually detect when async task are completed
 
             int jobId = int.Parse(Actions.GenerateHash().Content);
             Assert.AreEqual(numberOfPasswords, jobId);
@@ -102,7 +102,7 @@ namespace Jumpcloud_APITest
             Actions.Shutdown();
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(Actions.IsBase64String(response.Content));
+            Assert.IsTrue(Utils.IsBase64String(response.Content));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Jumpcloud_APITest
             var response = Actions.GetHash(jobId);
 
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsTrue(Actions.IsBase64String(response.Content));
+            Assert.IsTrue(Utils.IsBase64String(response.Content));
         }
 
         [Test]

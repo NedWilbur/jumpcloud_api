@@ -13,7 +13,6 @@ namespace Jumpcloud_APITest
 {
     internal static class Actions
     {
-        private static Random Random = new Random();
         private static Process appProcess;
         private static Dictionary<string, string> headers = new Dictionary<string, string>() { { "Content-Type", "application/json" } };
 
@@ -56,7 +55,7 @@ namespace Jumpcloud_APITest
         /// <returns></returns>
         internal static IRestResponse GenerateHash(string password = null)
         {
-            if (password == null) password = Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
+            if (password == null) password = Utils.Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
             Log.Info($"Generating hash for {password}");
 
             string body = JsonConvert.SerializeObject(new{ password = password });
@@ -70,7 +69,7 @@ namespace Jumpcloud_APITest
         // TODO: Investigate way to reduce redundancy of below method (similar to above method)
         internal static async void GenerateHashAsync(string password = null)
         {
-            if (password == null) password = Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
+            if (password == null) password = Utils.Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
             Log.Info($"Generating hash for {password} (ASYNC)");
 
             string body = JsonConvert.SerializeObject(new { password = password });
@@ -97,22 +96,6 @@ namespace Jumpcloud_APITest
             Log.Info("Getting stats");
             IRestResponse response = Api.Get($"{Config.BaseUrl}/stats", headers, null);
             return JsonConvert.DeserializeObject<Stats>(response.Content);
-        }
-
-        // Utils (TODO: Move to Util class?)
-        /// <summary>
-        /// Sleep for provided milliseconds
-        /// </summary>
-        /// <param name="ms"></param>
-        internal static void Sleep(int ms) => Task.Delay(ms);
-
-        /// <summary>
-        /// Returns true if string is base64
-        /// </summary>
-        public static bool IsBase64String(string base64)
-        {
-            Span<byte> buffer = new Span<byte>(new byte[base64.Length]);
-            return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
         }
     }
 }
