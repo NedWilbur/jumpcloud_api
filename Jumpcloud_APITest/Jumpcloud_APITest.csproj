@@ -15,4 +15,10 @@
     <PackageReference Include="RestSharp" Version="106.15.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="app.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
