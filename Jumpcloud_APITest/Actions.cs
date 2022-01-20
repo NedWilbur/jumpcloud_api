@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Jumpcloud_APITest
 {
-    internal static class Utils
+    internal static class Actions
     {
         private static Random Random = new Random();
         private static Process appProcess;
