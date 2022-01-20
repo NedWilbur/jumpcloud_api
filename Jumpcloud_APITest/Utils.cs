@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using NUnit.Framework;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,7 +12,9 @@ namespace Jumpcloud_APITest
 {
     internal static class Utils
     {
+        private static Random Random = new Random();
         private static Process appProcess;
+        private static Dictionary<string, string> headers = new Dictionary<string, string>() { { "Content-Type", "application/json" } };
 
         internal static void StartService()
         {
@@ -18,7 +23,7 @@ namespace Jumpcloud_APITest
 
         internal static void StopService()
         {
-            throw new NotImplementedException();
+            Api.Post(Config.BaseUrl, headers, "shutdown");
         }
 
         internal static void KillService()
@@ -27,17 +32,19 @@ namespace Jumpcloud_APITest
             appProcess?.WaitForExit(10 * 1000);
         }
 
-        internal static void GenerateHash(string password)
+        internal static IRestResponse GenerateHash(string password = null)
         {
-            throw new NotImplementedException();
+            if (password == null) password = Random.Next(5000).ToString(); // TODO: Use faker lib to generate better fake data
+            string body = JsonConvert.SerializeObject(new{ password = password });
+            return Api.Post($"{Config.BaseUrl}/hash", headers, body);
         }
 
-        internal static void GetHash(int id)
+        internal static IRestResponse GetHash(int id)
         {
-            throw new NotImplementedException();
+            return Api.Post($"{Config.BaseUrl}/hash/{id}", headers, null);
         }
 
-        internal static void GetStats()
+        internal static IRestResponse GetStats()
         {
             throw new NotImplementedException();
         }
